@@ -5,10 +5,6 @@
 #include <imgui_impl_opengl3.h>
 #include <GLFW/glfw3.h>
 
-//extern "C" {
-//    extern GLFWwindow *GetGLFWwindowHandle(void);
-//}
-
 int main(void)
 {
     InitWindow(1200, 800, "Hello world!");
