@@ -1,16 +1,19 @@
+#include <external/fix_win32_compatibility.h>
 #include <raylib.h>
 #include <imgui.h>
-#include <imgui_impl_win32.h>
+#include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <GLFW/glfw3.h>
 
-#include "imgui_interaction.hpp"
+//extern "C" {
+//    extern GLFWwindow *GetGLFWwindowHandle(void);
+//}
 
 int main(void)
 {
-    InitWindow(800, 800, "Hello world!");
+    InitWindow(1200, 800, "Hello world!");
 
-    HWND hwnd = static_cast<HWND>(GetWindowHandle());
+    GLFWwindow *window = GetGLFWwindowHandle();
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -21,7 +24,7 @@ int main(void)
 
     ImGui::StyleColorsDark();
 
-    ImGui_ImplWin32_Init(hwnd);
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
     bool show = true;
@@ -30,18 +33,18 @@ int main(void)
 
     while(!WindowShouldClose())
     {
-        imgui_interaction();
-        
         BeginDrawing();
-            ::ClearBackground(DARKGRAY);
+            ClearBackground({ 0xff, 0xff, 0x00, 0xff });
 
-            ::DrawFPS(0, 0);
+            DrawFPS(10, 10);
+
+            // ::DrawRectangle(::GetScreenWidth() / 4, ::GetScreenHeight() / 4, ::GetScreenWidth() / 2, ::GetScreenHeight() / 2, (Color){0xff, 0x00, 0x00, 0xff});
 
             ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplWin32_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            ImGui::SetNextWindowSize((const ImVec2){400, 400});
+            ImGui::SetNextWindowSize({400, 400});
             ImGui::Begin("Hello world!", nullptr, 0);
             ImGui::Text("Liviu este gei");
             ImGui::End();
@@ -49,11 +52,11 @@ int main(void)
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        ::EndDrawing();
+        EndDrawing();
     }
     ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplWin32_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-    ::CloseWindow();
+    ::RLCloseWindow();
     return 0;
 }
