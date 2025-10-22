@@ -1,7 +1,7 @@
 # Description
-A simple DND Creator.
+A simple FRP campaign manager.
 
-This project is aimed to create a smoother experience to develop your DND campaign and also make your characters for your adventure!
+This project is aimed to create a smoother experience to develop your FRP campaign and also make your characters for your adventure!
 
 This may change in the future!
 
